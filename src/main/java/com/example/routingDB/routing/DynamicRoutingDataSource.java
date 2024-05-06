@@ -30,7 +30,6 @@ public class DynamicRoutingDataSource extends AbstractRoutingDataSource {
 	@Override
 	protected DataSource determineTargetDataSource() {
 		String key = DataSourceContextHolder.getDataSourceKey();
-		log.info("key = {}", key);
 		Assert.hasText(key, "No data source key");
 		DataSource targetDataSource = dataSourceRepository.getDataSource(key);
 		Assert.notNull(targetDataSource, "No dataSource found for key =>" + key);

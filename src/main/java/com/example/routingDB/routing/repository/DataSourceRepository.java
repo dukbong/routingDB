@@ -7,11 +7,21 @@ import javax.sql.DataSource;
 
 import org.springframework.stereotype.Repository;
 
+import com.example.routingDB.dto.UserDBDTO;
+import com.example.routingDB.entity.UserDB;
+import com.example.routingDB.repository.UserDBRepository;
+
+import lombok.RequiredArgsConstructor;
+
 @Repository
+@RequiredArgsConstructor
 public class DataSourceRepository {
 	
 	private final Map<String, DataSource> dataSourceMap = new HashMap<>();
 	private DataSource defaultDataSource;
+	
+	// DB에서 관리
+	private final UserDBRepository userDBRepository;
 
 	public DataSource getDataSource(String key) {
 		return dataSourceMap.get(key);
@@ -19,6 +29,11 @@ public class DataSourceRepository {
 	
 	public void addDataSource(String key, DataSource dataSource) {
 		dataSourceMap.put(key, dataSource);
+	}
+	
+	// DB에 저장하기
+	public void addDataSource(UserDBDTO userDBDTO) {
+		userDBRepository.save(userDBDTO.convertEntity());
 	}
 	
 	public boolean containsDataSource(String key) {
