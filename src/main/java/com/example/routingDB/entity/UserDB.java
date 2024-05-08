@@ -26,7 +26,7 @@ public class UserDB {
 	@Column(name = "userDB_id")
 	private Long id;
 	
-	private String key;
+	private String databaseName;
 	
 	private String url;
 	
@@ -41,9 +41,9 @@ public class UserDB {
 	private UserEntity userEntity;
 	
 	@Builder
-	public UserDB(Long id, String key, String url, String driverName, String username, String password) {
+	public UserDB(Long id, String databaseName, String url, String driverName, String username, String password) {
 		this.id = id;
-		this.key = key;
+		this.databaseName = databaseName;
 		this.url = url;
 		this.driverName = driverName;
 		this.username = username;
@@ -51,8 +51,9 @@ public class UserDB {
 	}
 	
 	// 추가 및 삭제의 경우 외래키를 가진 쪽에서 진행
-	public void addDB() {
-		boolean containKey = this.userEntity.getUserDBs().stream().anyMatch(i -> i.getKey().equals(this.key));
+	public void addDB(UserEntity userEntity) {
+		this.userEntity = userEntity;
+		boolean containKey = this.userEntity.getUserDBs().stream().anyMatch(i -> i.getDatabaseName().equals(this.databaseName));
 		if(containKey) {
 			throw new DuplicateKeyException("Duplicate DB key");
 		}

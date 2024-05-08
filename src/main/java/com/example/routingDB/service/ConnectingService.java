@@ -1,11 +1,11 @@
 package com.example.routingDB.service;
 
-import com.example.routingDB.dto.DBInfoDTO;
+import com.example.routingDB.dto.UserDbDTO;
 
 public interface ConnectingService {
 
-	void connect(DBInfoDTO dbInfoDTO);
+	void saveDbInfo(UserDbDTO userDbDTO);
 
-	void select(String key);
+	void connectDbInfo(String key);
 
 }
